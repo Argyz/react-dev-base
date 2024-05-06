@@ -22,7 +22,10 @@ export const ProductButtons = ({ className, style }: Props) => {
             >-</button>
 
             <div className={styles.countLabel}>{counter}</div>
-            <button className={styles.buttonAdd} onClick={() => increaseBy(1)} >+</button>
+            <button
+                className={styles.buttonAdd}
+                onClick={() => increaseBy(1)}
+            > + </button>
         </div>
     );
 };
