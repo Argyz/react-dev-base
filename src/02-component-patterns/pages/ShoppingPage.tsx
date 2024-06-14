@@ -1,87 +1,47 @@
-import React, { useState } from 'react'
+import { useCallback, useState } from 'react';
 import { ProductCard, ProductButtons, ProductImage, ProductTitle } from '../components/'
-import '../styles/custom-styles.css'
-import { useShoppingCart } from '../hooks/useShoppingCart'
 import { products } from '../data/product'
+import '../styles/custom-styles.css'
 
+const product = products[0];
 
 const ShoppingPage = () => {
 
+  return (
+    <div>
+      <h1>Shopping Store</h1>
+      <hr />
+      <div style={{//style inline
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      }}>
 
-    const {
-        onProductCountChange,
-        shoppingCart
-    } = useShoppingCart();
+        <ProductCard
+          product={product}
+          className='bg-dark text-bold'
+          key={product.id}
+          initialValues={{
+            count: 4,
+            maxCount: 10,
+          }}
+        >
+          {
+            ({ reset }) => (
+              <>
+                <ProductImage className='custom-image' />
+                <ProductTitle className='text-white' />
+                <ProductButtons className='custom-button' />
 
-   
-    return (
-        <div>
-            <h1>Shopping Store</h1>
-            <hr />
-            <div style={{//style inline
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-            }}>
-                {
-                    products.map(product => (
+                <button onClick={reset}>Reset</button>
+              </>
+            )
+          }
+        </ProductCard>
+      </div>
 
-                        <ProductCard
-                            product={product}
-                            className='bg-dark text-bold'
-                            key={product.id}
-                            onChange={onProductCountChange}
-                            value={shoppingCart[product.id]?.count || 0}
-
-                        >
-                            <ProductImage className='custom-image' />
-                            <ProductTitle className='text-white' />
-                            <ProductButtons className='custom-button' />
-                        </ProductCard>
-                    ))
-                }
-                <div className='shopping-cart'>
-                    {
-                        Object.entries(shoppingCart).map(([key, product]) => (
-                            <ProductCard
-                                key={key}
-                                product={product}
-                                className='bg-dark text-white'
-                                style={{ width: '100px' }}
-                                value={product.count}
-                                onChange={onProductCountChange}
-                            >
-                                <ProductImage
-                                    className='custom-image'
-                                />
-                                <ProductButtons
-                                    className='custom-buttons'
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center'
-                                    }}
-                                />
-                            </ProductCard>
-                        ))
-                    }
-                </div>
-                {/* <div className='shopping-cart'>
-                    <ProductCard
-                        product={product2}
-                        className='bg-dark text-bold'
-                    >
-                        <ProductImage className='custom-image' />
-                        <ProductTitle className='text-white' />
-                        <ProductButtons className='custom-button' />
-                    </ProductCard>
-
-                </div> */}
-            </div>
-            <div>
-                {JSON.stringify(shoppingCart, null, 5)}
-            </div>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default ShoppingPage
